@@ -13,9 +13,9 @@ const char QUERY300 = '3';
 typedef struct node_s node_t;
 struct node_s { // 노드
     int color;
-    int color_time;
+    int color_time; // 색깔이 지정된 시간
     int max_depth;
-    node_t *parent;
+    node_t *parent; // 부모 노드
     node_t *children; // 자식 노드들 (Linked List)
     node_t *next; // Linked List 상에서 다음 노드
 };
@@ -32,7 +32,7 @@ new_node(int color, int max_depth) // 인스턴스 생성
 
     node = (node_t *) malloc(sizeof(node_t));
     node->color = color;
-    node->color_time = _time++;
+    node->color_time = _time++; // 색깔이 지정된 시간
     node->max_depth = max_depth;
     node->children = NULL;
     return node;
@@ -84,7 +84,7 @@ dfs(node_t *curr, int color, int time)
     if (time > curr->color_time) { // 색깔 갱신 필요
         curr->color = color; // 색깔 갱신
         curr->color_time = time;
-    } else {
+    } else { // 현재 노드의 색깔이 가장 최신
         color = curr->color;
         time = curr->color_time;
     }
@@ -125,7 +125,7 @@ main()
     char query;
 
     _time = 0; // 시계
-    _root = _nodes[0] = new_node(ROOT, INF); // 더미 노드 (모든 루트 노드의 부모 노드)
+    _root = _nodes[ROOT] = new_node(ROOT, INF); // 더미 노드 (모든 루트 노드의 부모 노드)
     scanf("%d", &q);
     while (q--) {
         scanf(" %c00", &query); // if문 chaining은 최대 실행 수 많은 쿼리 순으로 배치
