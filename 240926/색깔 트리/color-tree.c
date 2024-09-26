@@ -15,12 +15,14 @@ struct node_s { // 노드
     int color;
     int color_time;
     int max_depth;
+    node_t *parent;
     node_t *children; // 자식 노드들 (Linked List)
     node_t *next; // Linked List 상에서 다음 노드
 };
 
 int _sum;
 int _time;
+node_t *_root;
 node_t *_nodes[MAX_ID]; // m_id-node 매핑
 
 node_t *
@@ -45,18 +47,30 @@ add_node(node_t *parent, int m_id, int color, int max_depth) // 노드 추가
     _nodes[m_id] = new_node(color, max_depth < parent->max_depth - 1 ? max_depth : parent->max_depth - 1);
     _nodes[m_id]->next = parent->children; // 부모 노드의 자식 Linked List 앞쪽에 삽입
     parent->children = _nodes[m_id];
+    _nodes[m_id]->parent = parent;
 }
 
 void
 change_color(node_t *curr, int color) // 색깔 변경
 {
-    node_t *child;
-
     curr->color = color; // 색깔 설정
     curr->color_time = _time++; // 색깔이 지정된 시간
-    for (child = curr->children; child; child = child->next) { // 자식 노드 순회
-        change_color(child, color);
+}
+
+int
+get_color(node_t *curr) // 색깔 조회
+{
+    int max;
+    int color;
+
+    max = 0;
+    for (; curr != _root; curr = curr->parent) { // 부모 순회
+        if (curr->color_time > max) { // 가장 최신 색깔
+            max = curr->color_time;
+            color = curr->color;
+        }
     }
+    return color; // 최신 색깔 반환
 }
 
 char
@@ -110,7 +124,7 @@ main()
     int max_depth;
     char query;
 
-    _nodes[0] = new_node(ROOT, INF); // 더미 노드 (모든 루트 노드의 부모 노드)
+    _root = _nodes[0] = new_node(ROOT, INF); // 더미 노드 (모든 루트 노드의 부모 노드)
     _time = 0; // 시계
     scanf("%d", &q);
     while (q--) {
@@ -123,7 +137,7 @@ main()
             add_node(_nodes[p_id == IS_ROOT ? ROOT : p_id], m_id, color, max_depth); // 노드 추가
         } else if (query == QUERY300) { // 300 쿼리
             scanf("%d", &m_id);
-            printf("%d\n", _nodes[m_id]->color); // m_id 노드의 색깔 출력
+            printf("%d\n", get_color(_nodes[m_id])); // 색깔 조회
         } else { // 400 쿼리
             printf("%d\n", get_score()); // 점수 조회
         }
