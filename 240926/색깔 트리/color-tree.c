@@ -56,7 +56,8 @@ change_color(node_t *curr, int color)
 }
 
 int
-dfs(node_t *curr) {
+dfs(node_t *curr)
+{
     int i;
     int cnt;
     int colors;
@@ -77,7 +78,7 @@ dfs(node_t *curr) {
 }
 
 int
-calc()
+get_score()
 {
     node_t *child;
 
@@ -112,7 +113,7 @@ main()
             scanf("%d", &m_id);
             printf("%d\n", _nodes[m_id]->color);
         } else {
-            printf("%d\n", calc());
+            printf("%d\n", get_score());
         }
     }
 }
