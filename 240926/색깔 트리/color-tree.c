@@ -98,9 +98,9 @@ main()
     int p_id;
     int color;
     int max_depth;
-
-    scanf("%d", &q);
+    
     _nodes[0] = new_node(0, INF);
+    scanf("%d", &q);
     while (q--) {
         scanf("%d", &query);
         if (query == QUERY200) {
