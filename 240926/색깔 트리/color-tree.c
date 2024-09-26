@@ -4,11 +4,11 @@
 #define MAX_ID 100001
 
 const int INF = 2147483647;
-const int QUERY100 = 100;
-const int QUERY200 = 200;
-const int QUERY300 = 300;
 const int IS_ROOT = -1;
 const int ROOT = 0;
+const char QUERY100 = '1';
+const char QUERY200 = '2';
+const char QUERY300 = '3';
 
 typedef struct node_s node_t;
 struct node_s {
@@ -93,16 +93,16 @@ int
 main()
 {
     int q;
-    int query;
     int m_id;
     int p_id;
     int color;
     int max_depth;
+    char query;
     
     _nodes[0] = new_node(0, INF);
     scanf("%d", &q);
     while (q--) {
-        scanf("%d", &query);
+        scanf(" %c00", &query);
         if (query == QUERY200) {
             scanf("%d %d", &m_id, &color);
             change_color(_nodes[m_id], color);
