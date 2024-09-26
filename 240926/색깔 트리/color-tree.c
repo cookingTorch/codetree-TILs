@@ -14,8 +14,8 @@ typedef struct node_s node_t;
 struct node_s {
     int color;
     int max_depth;
-    struct node_s *children;
-    struct node_s *next;
+    node_t *children;
+    node_t *next;
 };
 
 int _sum;
