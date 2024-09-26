@@ -124,8 +124,8 @@ main()
     int max_depth;
     char query;
 
-    _root = _nodes[0] = new_node(ROOT, INF); // 더미 노드 (모든 루트 노드의 부모 노드)
     _time = 0; // 시계
+    _root = _nodes[0] = new_node(ROOT, INF); // 더미 노드 (모든 루트 노드의 부모 노드)
     scanf("%d", &q);
     while (q--) {
         scanf(" %c00", &query); // if문 chaining은 최대 실행 수 많은 쿼리 순으로 배치
