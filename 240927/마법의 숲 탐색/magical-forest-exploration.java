@@ -12,9 +12,6 @@ public class Main {
 
 	private static int r;
 	private static int c;
-	private static int x;
-	private static int y;
-	private static int d;
 	private static int sum;
 	private static int[] low;
 	private static int[][] exit;
@@ -38,7 +35,7 @@ public class Main {
 		return low[idx];
 	}
 
-	private static void insert(int idx) {
+	private static void insert(int idx, int x, int y, int d) {
 		int i;
 
 		for (;;) {
@@ -68,7 +65,7 @@ public class Main {
 		}
 		if (x < 4) {
 			for (i = 3; i < r + 3; i++) {
-				System.arraycopy(map[0], 2, map[i], 2, c);
+				System.arraycopy(map[0], 1, map[i], 1, c);
 			}
 			return;
 		}
@@ -96,16 +93,13 @@ public class Main {
 		r = Integer.parseInt(st.nextToken());
 		c = Integer.parseInt(st.nextToken());
 		k = Integer.parseInt(st.nextToken());
-		map = new int[r + 5][c + 4];
+		map = new int[r + 4][c + 2];
 		for (i = 0; i < r + 3; i++) {
 			map[i][0] = WALL;
-			map[i][1] = WALL;
-			map[i][c + 2] = WALL;
-			map[i][c + 3] = WALL;
+			map[i][c + 1] = WALL;
 		}
-		for (i = 0; i < c + 4; i++) {
+		for (i = 0; i < c + 2; i++) {
 			map[r + 3][i] = WALL;
-			map[r + 4][i] = WALL;
 		}
 		sum = 0;
 		low = new int[k + 1];
@@ -114,10 +108,7 @@ public class Main {
 		q = new ArrayDeque<>(k);
 		for (i = 1; i <= k; i++) {
 			st = new StringTokenizer(br.readLine(), " ", false);
-			x = 1;
-			y = Integer.parseInt(st.nextToken()) + 1;
-			d = Integer.parseInt(st.nextToken());
-			insert(i);
+			insert(i, 1, Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
 		}
 		System.out.print(sum);
 	}
