@@ -1,11 +1,13 @@
 #include <stdio.h>
 
-#define MAX_R 75
-#define MAX_C 74
+#define MAX_R 74
+#define MAX_C 72
 #define MAX_K 1001
 
 const int WALL = -1;
 const int EMPTY = 0;
+const int TRUE = 1;
+const int FALSE = 0;
 const int _dx[] = {-1, 0, 1, 0};
 const int _dy[] = {0, 1, 0, -1};
 
@@ -30,7 +32,7 @@ get_low(int idx, int out_x, int out_y)
 	int i;
 	int n_idx;
 
-	_visited[idx] = 1;
+	_visited[idx] = TRUE;
 	_stack[_stack_idx++] = idx;
 	for (i = 0; i < 4; i++) {
 		n_idx = _map[out_x + _dx[i]][out_y + _dy[i]];
@@ -74,7 +76,7 @@ insert(int idx, int x, int y, int d) {
 	}
 	if (x < 4) {
 		for (i = 3; i < _r + 3; i++) {
-			for (j = 2; j <= _c + 1; j++) {
+			for (j = 1; j <= _c; j++) {
 				_map[i][j] = EMPTY;
 			}
 		}
@@ -90,7 +92,7 @@ insert(int idx, int x, int y, int d) {
 	_out[idx][1] = y + _dy[d];
 	_sum += get_low(idx, _out[idx][0], _out[idx][1]);
 	while (_stack_idx) {
-		_visited[_stack[--_stack_idx]] = 0;
+		_visited[_stack[--_stack_idx]] = FALSE;
 	}
 }
 
@@ -105,25 +107,22 @@ main() {
 	scanf("%d %d %d", &_r, &_c, &k);
 	for (i = 0; i < _r + 3; i++) {
 		_map[i][0] = WALL;
-		_map[i][1] = WALL;
-		for (j = 2; j <= _c + 1; j++) {
+		for (j = 1; j <= _c; j++) {
 			_map[i][j] = EMPTY;
 		}
-		_map[i][_c + 2] = WALL;
-		_map[i][_c + 3] = WALL;
+		_map[i][_c + 1] = WALL;
 	}
-	for (i = 0; i < _c + 4; i++) {
+	for (i = 0; i < _c + 2; i++) {
 		_map[_r + 3][i] = WALL;
-		_map[_r + 4][i] = WALL;
+	}
+	for (i = 0; i <= k; i++) {
+		_visited[i] = FALSE;
 	}
 	_sum = 0;
-	for (i = 0; i <= k; i++) {
-		_visited[i] = 0;
-	}
 	_stack_idx = 0;
 	for (i = 1; i <= k; i++) {
 		scanf("%d %d", &y, &d);
-		insert(i, 1, y + 1, d);
+		insert(i, 1, y, d);
 	}
 	printf("%d", _sum);
 }
