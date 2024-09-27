@@ -111,7 +111,7 @@ public class Main {
 		low = new int[k + 1];
 		exit = new int[k + 1][];
 		visited = new boolean[k + 1];
-		q = new ArrayDeque<>();
+		q = new ArrayDeque<>(k);
 		for (i = 1; i <= k; i++) {
 			st = new StringTokenizer(br.readLine(), " ", false);
 			x = 1;
