@@ -49,13 +49,11 @@ public class Main {
 	private static Cell[][] southWall;
 	private static Cell[][] northWall;
 	private static BufferedReader br;
-	
-	private static final void fillFloor(int n) throws IOException {
+
+	private static final void fillFloor(int n, int size) throws IOException {
 		int i;
 		int j;
-		int size;
-		
-		size = n + 2;
+
 		floor = new Cell[size][size];
 		for (i = 0; i < size; i++) {
 			floor[0][i] = new Cell(WALL);
@@ -82,7 +80,7 @@ public class Main {
 			}
 		}
 	}
-	
+
 	private static final void connectFloor(int m, int size) {
 		int i;
 		int j;
@@ -90,7 +88,7 @@ public class Main {
 		int westCnt;
 		int southCnt;
 		int northCnt;
-		
+
 		eastCnt = m - 1;
 		westCnt = 0;
 		southCnt = 0;
@@ -124,11 +122,11 @@ public class Main {
 			}
 		}
 	}
-	
+
 	private static final void connectCube(int m) {
 		int i;
 		int j;
-		
+
 		for (i = 0; i < m; i++) {
 			ceil[0][i].north = northWall[0][m - 1 - i];
 			northWall[0][m - 1 - i].south = ceil[0][i];
@@ -174,7 +172,7 @@ public class Main {
 			}
 		}
 	}
-	
+
 	private static final void spread(int f) throws IOException {
 		int i;
 		int j;
@@ -182,7 +180,7 @@ public class Main {
 		char d;
 		Cell cell;
 		StringTokenizer st;
-		
+
 		for (i = 0; i < f; i++) {
 			st = new StringTokenizer(br.readLine(), " ", false);
 			cell = floor[Integer.parseInt(st.nextToken()) + 1][Integer.parseInt(st.nextToken()) + 1];
@@ -213,6 +211,7 @@ public class Main {
 	}
 
 	private static final int bfs() {
+		int nextDist;
 		Cell curr;
 		Cell next;
 		ArrayDeque<Cell> q;
@@ -222,32 +221,33 @@ public class Main {
 		while (!q.isEmpty()) {
 			curr = q.pollFirst();
 			next = curr.east;
-			if (curr.dist + 1 < next.dist && curr.dist + 1 < next.time) {
-				next.dist = curr.dist + 1;
+			nextDist = curr.dist + 1;
+			if (nextDist < next.dist && nextDist < next.time) {
+				next.dist = nextDist;
 				if (next.type == OUT) {
 					return next.dist;
 				}
 				q.addLast(next);
 			}
 			next = curr.west;
-			if (curr.dist + 1 < next.dist && curr.dist + 1 < next.time) {
-				next.dist = curr.dist + 1;
+			if (nextDist < next.dist && nextDist < next.time) {
+				next.dist = nextDist;
 				if (next.type == OUT) {
 					return next.dist;
 				}
 				q.addLast(next);
 			}
 			next = curr.south;
-			if (curr.dist + 1 < next.dist && curr.dist + 1 < next.time) {
-				next.dist = curr.dist + 1;
+			if (nextDist < next.dist && nextDist < next.time) {
+				next.dist = nextDist;
 				if (next.type == OUT) {
 					return next.dist;
 				}
 				q.addLast(next);
 			}
 			next = curr.north;
-			if (curr.dist + 1 < next.dist && curr.dist + 1 < next.time) {
-				next.dist = curr.dist + 1;
+			if (nextDist < next.dist && nextDist < next.time) {
+				next.dist = nextDist;
 				if (next.type == OUT) {
 					return next.dist;
 				}
@@ -270,7 +270,7 @@ public class Main {
 		m = Integer.parseInt(st.nextToken());
 		f = Integer.parseInt(st.nextToken());
 		size = n + 2;
-		fillFloor(n);
+		fillFloor(n, size);
 		fillWall(m, eastWall = new Cell[m][m]);
 		fillWall(m, westWall = new Cell[m][m]);
 		fillWall(m, southWall = new Cell[m][m]);
