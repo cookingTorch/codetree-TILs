@@ -12,6 +12,10 @@ public class Main {
 	private static final int START = '2';
 	private static final int CUBE = '3';
 	private static final int OUT = '4';
+	private static final char EAST = '0';
+	private static final char WEST = '1';
+	private static final char SOUTH = '2';
+	private static final char NORTH = '3';
 
 	private static final class Cell {
 		int time;
@@ -109,8 +113,6 @@ public class Main {
 		int f;
 		int i;
 		int j;
-		int r;
-		int c;
 		int d;
 		int v;
 		int size;
@@ -223,27 +225,25 @@ public class Main {
 		}
 		for (i = 0; i < f; i++) {
 			st = new StringTokenizer(br.readLine(), " ", false);
-			r = Integer.parseInt(st.nextToken()) + 1;
-			c = Integer.parseInt(st.nextToken()) + 1;
-			d = Integer.parseInt(st.nextToken());
+			cell = floor[Integer.parseInt(st.nextToken()) + 1][Integer.parseInt(st.nextToken()) + 1];
+			d = st.nextToken().charAt(0);
 			v = Integer.parseInt(st.nextToken());
-			cell = floor[r][c];
-			if (d == 0) {
+			if (d == EAST) {
 				for (j = 0; cell.type == EMPTY; j += v) {
 					cell.time = Math.min(cell.time, j);
 					cell = cell.east;
 				}
-			} else if (d == 1) {
+			} else if (d == WEST) {
 				for (j = 0; cell.type == EMPTY; j += v) {
 					cell.time = Math.min(cell.time, j);
 					cell = cell.west;
 				}
-			} else if (d == 2) {
+			} else if (d == SOUTH) {
 				for (j = 0; cell.type == EMPTY; j += v) {
 					cell.time = Math.min(cell.time, j);
 					cell = cell.south;
 				}
-			} else if (d == 3) {
+			} else if (d == NORTH) {
 				for (j = 0; cell.type == EMPTY; j += v) {
 					cell.time = Math.min(cell.time, j);
 					cell = cell.north;
