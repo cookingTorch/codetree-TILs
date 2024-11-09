@@ -229,22 +229,22 @@ public class Main {
 			v = Integer.parseInt(st.nextToken());
 			cell = floor[r][c];
 			if (d == 0) {
-				for (j = 0; cell.type != WALL; j += v) {
+				for (j = 0; cell.type == EMPTY; j += v) {
 					cell.time = Math.min(cell.time, j);
 					cell = cell.east;
 				}
 			} else if (d == 1) {
-				for (j = 0; cell.type != WALL; j += v) {
+				for (j = 0; cell.type == EMPTY; j += v) {
 					cell.time = Math.min(cell.time, j);
 					cell = cell.west;
 				}
 			} else if (d == 2) {
-				for (j = 0; cell.type != WALL; j += v) {
+				for (j = 0; cell.type == EMPTY; j += v) {
 					cell.time = Math.min(cell.time, j);
 					cell = cell.south;
 				}
 			} else if (d == 3) {
-				for (j = 0; cell.type != WALL; j += v) {
+				for (j = 0; cell.type == EMPTY; j += v) {
 					cell.time = Math.min(cell.time, j);
 					cell = cell.north;
 				}
